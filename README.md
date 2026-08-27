@@ -105,6 +105,38 @@ Both scripts:
 Training expects pretokenized sources under `../../tokens` relative to the script
 (adjust `token_dir` in the script, or place your `tokens/` directory accordingly).
 
+## Training run
+
+Figures below are from an example run (`pretty-violet-4`): ~60k steps, ~6.1B tokens
+seen over the web/code/math mixture, WSD LR schedule (warmup → hold at 3e-4 → cosine
+decay during the final anneal phase). The step ~15k transition is the first mixture
+phase boundary; the isolated spikes are recovered-from loss/grad-norm blips.
+
+### Overview
+
+![Training overview](graphs/training_overview.png)
+
+### Loss
+
+| Train | Validation |
+|---|---|
+| ![train/loss](graphs/train_loss.png) | ![val/loss](graphs/val_loss.png) |
+
+### Learning rate, grad norm, throughput
+
+| | |
+|---|---|
+| ![train/lr](graphs/train_lr.png) | ![train/grad_norm](graphs/train_grad_norm.png) |
+| ![train/tokens_seen](graphs/train_tokens_seen.png) | |
+
+### Per-source loss
+
+| Source | Train | Validation |
+|---|---|---|
+| web | ![train/loss_web](graphs/train_loss_web.png) | ![val/loss_web](graphs/val_loss_web.png) |
+| code | ![train/loss_code](graphs/train_loss_code.png) | ![val/loss_code](graphs/val_loss_code.png) |
+| math | ![train/loss_math](graphs/train_loss_math.png) | ![val/loss_math](graphs/val_loss_math.png) |
+
 ## Setup
 
 ```bash
